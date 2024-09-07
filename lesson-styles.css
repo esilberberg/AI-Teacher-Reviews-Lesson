@@ -1,0 +1,176 @@
+:root {
+    --background:  #F7F7F7;
+    --warm-gray: #e0e0e0;
+    --dark: #011376;
+    --light: #64BFF6;
+    --slate: #758493;
+ }
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+p, h1, h2, h3, ul, ol {
+    font-family: Helvetica, sans-serif;
+}
+
+a{
+    color: var(--dark);
+    transition: 0.1s ease-in;
+}
+
+a:hover {
+    color: var(--light);
+}
+
+pre{
+    margin-bottom: 1.5rem;
+}
+
+.file-name {
+    font-family: monospace;
+    background-color: var(--warm-gray);
+    padding: 2px;
+    border-radius: 3px;
+    font-size: 14px;
+}
+header {
+    margin-bottom: 4rem;
+    scroll-margin-top: 50px;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: var(--warm-gray);
+}
+.navbar-content {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: right;
+    font-size: 1.4rem;
+    padding: 5px 30px 5px 0;
+}
+
+.header-content {
+    margin: 2rem auto; 
+    max-width: 800px;
+    padding: 2rem 0.5rem;
+    color: var(--dark);
+}
+.title {
+    font-size: 2rem;
+}
+.subtitle {
+    font-size: 1.4rem;
+}
+
+.header-content p {
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.header-author, .header-attribution {
+    margin-top: 1.5rem;
+}
+
+main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 0.5rem;
+}
+
+.contents-table {
+    border-right: 10px solid var(--light);
+    border-left: 10px solid var(--light);
+    border-radius: 10px;
+    padding: 2rem 1.5rem 1rem 1.5rem;
+}
+
+.contents-table p {
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+    color: var(--dark);
+}
+
+.contents-table li {
+    list-style: none;
+    line-height: 1.8;
+}
+
+ul ul {
+    margin-left: 40px;
+}
+.major-section {
+    margin: 4rem 0 0 0;
+}
+.lesson-chapter {
+    margin: 4rem 0 0 0;
+}
+
+h2 {
+    text-align: center;
+    border-bottom: 4px solid var(--dark);
+    color: var(--dark);
+    font-size: 1.8rem;
+    padding-bottom: 10px;
+    scroll-margin-top: 50px;
+}
+
+h3 {
+    border-left: 25px solid var(--light);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    scroll-margin-top: 50px;
+}
+
+.lesson-chapter ol {
+    margin-left: 50px;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    font-size: 17px;
+}
+
+.lesson-chapter li {
+    margin-bottom: 1rem;
+    
+}
+
+.lesson-chapter p {
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    font-size: 17px;
+}
+
+.files-list {
+    padding-left: 2rem;
+}
+
+footer {
+    background-color: var(--warm-gray);
+    margin-top: 8rem;
+}
+
+.footer-content {
+    padding: 2rem 0.5rem 1rem 0.5rem;
+    font-size: 12px;
+    text-align: center;
+}
+
+.footer-content p {
+    margin-bottom: 8px;
+}
+
+.footer-title {
+    font-style: italic;
+}
+.footer-content i {
+    font-size: 1.5rem;
+}

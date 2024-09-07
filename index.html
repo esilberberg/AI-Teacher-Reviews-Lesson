@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="lesson-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/nord.min.css">
+    <script src="https://kit.fontawesome.com/1d9765704f.js" crossorigin="anonymous"></script>
+
+    <title>Evaluating AI in Teacher Performance Reviews</title>
+</head>
+<body>
+    <header id="header">
+        <nav>
+            <div class="navbar-content">
+                <a href="http://" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i></a>
+                <a href="#header"><i class="fa-regular fa-circle-up"></i></a>
+            </div>
+        </nav>
+        <div class="header-content">
+            <h1 class="title" >Evaluating AI in Teacher Performance Reviews:</h1>
+            <h1 class="subtitle">Benefits, Biases, and Best Practices</h1>
+            <div class="header-attribution">
+                <p>Supported by the CUNY Office of Faculty Affairs' <a href="https://www.cuny.edu/academics/faculty-affairs/cuny-innovative-teaching-academy/building-bridges-of-knowledge-bbk/" target="_blank" rel="noopener noreferrer">Building Bridges of Knowledge</a> project</p>
+                <p>Available under a <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution 4.0 International license</a>
+                <i class="fa-brands fa-creative-commons"></i> <i class="fa-brands fa-creative-commons-by"></i></p>
+            </div>
+            <div class="header-author">
+                <p>By <a href="http://ericsilberberg.com" target="_blank" rel="noopener noreferrer">Eric Silberberg</a></p>
+                <p>Last Updated: 07 Sept 2024</p>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="contents-table">
+            <p>Table of Contents</p>
+            <ul>
+                <li><a href="#1">1. Introduction</a></li>
+                <ul>
+                    <li><a href="#1.1">1.1 Defining the problem</a></li>
+                    <li><a href="#1.2">1.2 What will you learn?</a></li>
+                    <li><a href="#1.3">1.3 Who is this tutorial for?</a></li>
+                    
+                </ul>
+        
+                <li><a href="#2">2. Practical Exercises</a></li>
+                <ul>        
+                    <li><a href="#2.1">2.1 Installing Gemini 1.5 Flash</a></li>
+                    <li><a href="#2.2">2.2 Exercise 1: Your first function with Gemini</a></li>
+                    <li><a href="#2.3">2.3 Exercise 2: Rating student reviews and prompt engineering</a></li>
+                    <li><a href="#2.4">2.4 Exercise 3: Iterating over a set of student reviews</a></li>
+                    <li><a href="#2.5">2.5 Scripts and files</a></li>
+                </ul>
+                <li><a href="#3">3. Evaluation</a></li>
+            </ul>
+        </section>
+        
+        <div class="major-section">
+            <h2 id="1">1. Introduction</h2>
+        <section class="lesson-chapter">
+            <h3 id="1.1">1.1 Defining the problem</h3>
+            <p>In early 2024, <a href="https://www.chalkbeat.org/newyork/2024/01/02/schools-to-use-artificial-intelligence-to-help-coach-teachers/" target="_blank" rel="noopener noreferrer"><i>Chalkbeat</i> reported</a> that The Urban Assembly school network would invest half a million dollars to develop a set of AI tools that could analyze teacher sentiment during instruction. The rollout sparked debate around the use of AI in teacher performance evaluations. A primary concern is the lack of transparency regarding the data AI uses for sentiment analysis, making it difficult to identify potential biases, especially those related to accent, dialect, register, and non-verbal communication. Despite these concerns, <a href="https://blog.kelley.iu.edu/2024/02/21/job-performance-evaluations-hidden-effects-from-ai-in-an-evaluator-role/" target="_blank" rel="noopener noreferrer">a study by professors at the Indiana University Kelley School of Business</a> finds that many employees perceive AI as less biased than human evaluators in performance reviews.</p>
+        </section>
+        <section class="lesson-chapter">   
+            <h3 id="1.2">1.2 What will you learn?</h3>
+            <p>In this tutorial, you'll try your hand at building your own AI tools that analyze sentiment in student feedback with the <a href="https://cloud.google.com/vertex-ai/generative-ai/docs/learn-resources" target="_blank" rel="noopener noreferrer">Google Gemini LLM</a> and Python. Through experience using the technology, you'll better understand the benefits, biases, and best practices of this approach to teacher performance evaluations. You'll learn how to:</p>
+            <ol>
+                <li>Configure the Gemini API, integrate it into Python functions, and analyze a set of student feedback with these functions.</li>
+                <li>Refine function output by way of prompt engineering.</li>
+                <li>Critically analyze the use of AI in teacher performance reviews.</li>
+            </ol>
+            <p>This is just an introduction. By the end, you'll have the essential skills needed to tackle more complex AI projects.</p>
+            <p>Complete Python scripts and related files for each exercise are provided in <a href="#2.5">Chapter 2.5</a>.</p>
+        </section>
+        <section class="lesson-chapter">
+            <h3 id="1.3">1.3 Who is this tutorial for?</h3>
+            <p>This tutorial is designed for educators and school administrators who are interested in exploring the potential of AI in teacher evaluation. It's also a great starting point for anyone in the general public who wants to go from being a consumer to creator by building their own custom AI tools.</p>
+            <p>A basic understanding of Python is required before starting the tutorial.</p>
+        </section>
+        </div>
+        <div class="major-section">
+            <h2 id="2">2. Practical Exercises</h2>
+        <section class="lesson-chapter">
+            <h3 id="2.1">2.1 Installing Gemini 1.5 Flash</h3>
+            <p>Gemini 1.5 Flash is Google’s free, lightweight LLM that can handle 10,000+ words in a prompt. We'll need to register for a Gemini API key and install Google's Generative AI Python library.</p>
+            <ol>
+                <li><p>Follow the <a href="https://ai.google.dev/gemini-api/docs/api-key" target="_blank" rel="noopener noreferrer">directions to generate your API key.</a> Once generated, copy and save the key in a new file on your computer called: <code class="file-name">gemini-api-key.txt</code> Do not share this key with anyone.</p></li>
+                <li><p>pip install <a href="https://ai.google.dev/gemini-api/docs/downloads" target="_blank" rel="noopener noreferrer">Google's Generative AI Python library:</a></p></li>
+            </ol> 
+            <pre><code class="language-python">pip install google-generativeai</code></pre>
+        </section>
+<!-- EXERCISE 1 --> 
+        <section class="lesson-chapter">
+            <h3 id="2.2">2.2 Exercise 1: Your first function with Gemini</h3>
+            <p>With everything installed, we’re ready to take Gemini for a test drive. Our first project will be an AI tool that creates an <a href="https://en.wikipedia.org/wiki/Anagram" target="_blank" rel="noopener noreferrer">anagram</a> of a person's name.</p>
+            <p>Let's get our files organized. Create a new folder called <code class="file-name">Exercise_01</code> and put the <code class="file-name">gemini-api-key.txt</code> file inside the folder. Create a new Python file in the folder and call it <code class="file-name">anagram.py</code> Your file structure should look like this:</p>
+<pre>
+    &mdash;&mdash; Exercise_01
+            &mdash; gemini-api-key.txt
+            &mdash; anagram.py
+</pre>
+            <p>Inside the IDE of your choice, open <code class="file-name">anagram.py</code>. We'll test that everything is in order by printing the contents of <code class="file-name">gemini-api-key.txt</code> to the terminal:</p>
+
+<pre><code class="language-python">with open('gemini-api-key.txt') as f:
+    genai_api_key = f.read()
+
+print(genai_api_key)
+</code></pre>
+            <p>Remove the print function. Next we'll import Google's Generative AI library and configure the language model. In just two short lines of code, you'll establish a connection to the Gemini API and create an object called "model" that can generate text with the gemini-1.5-flash LLM:</p>
+<pre><code class="language-python">import google.generativeai as genai
+
+#Read Gemini API key into memory.
+with open('gemini-api-key.txt') as f:
+    genai_api_key = f.read()
+    
+#Configure API and select the Gemini 1.5 Flash language model.
+genai.configure(api_key=genai_api_key)
+model = genai.GenerativeModel('gemini-1.5-flash')
+</code></pre>
+            <p>With Gemini configured, let's create a function that'll create anagrams using Gemini. We’ll start with a simple function called <code class="file-name">create_anagram(name)</code> that takes a person's name as input. Inside the function, we'll use <code class="file-name">model.generate_content()</code> to send a prompt to Gemini, asking it to generate an anagram based on the given name. I’m using a Python feature called an <a href="https://www.w3schools.com/python/python_string_formatting.asp" target="_blank" rel="noopener noreferrer">f-string (formatted string literals)</a> to add our function’s <code class="file-name">name</code> argument at the end of the prompt: Create one anagram with the letters in this person’s name:  {name}.</p>
+            <p>To retrieve the generated anagram as text, we'll use <code class="file-name">response.text</code>. If we omit the <code class="file-name">.text</code> attribute, the function will return metadata about the generated text.</p>
+            <p>Let's try running the function with and without <code class="file-name">.text</code> to see the difference. What anagrams can we create for Albert Einstein?</p>
+<pre><code class="language-python">def create_anagram(name):
+    """Create one anagram of the input name"""
+    response = model.generate_content(f"Create one anagram with the letters in this person's name: {name}")
+    #Experiment running the function with .text and without .text.
+    return response.text
+
+print(create_anagram("albert einstein"))
+</code></pre>
+        </section>
+
+<!-- EXERCISE 2 -->
+        <section class="lesson-chapter">
+            <h3 id="2.3">2.3 Exercise 2: Rating student reviews and prompt engineering</h3>
+            <p>Now that we understand the basics of the Gemini API, let's build a new AI tool that analyzes student reviews for their sentiment.</p>
+            <p>Create a second folder called <code class="file-name">Exercise_02</code>. Inside the folder, create a new Python file called <code class="file-name">rate-sentiment.py</code>. Then download <a href="Exercise_02/student-review.txt" download="student-review.txt">student-review.txt <i class="fa-solid fa-file-export"></i></a> and add it to the folder. Your file structure should look like this:</p> 
+<pre>
+    &mdash;&mdash; Exercise_02
+            &mdash; gemini-api-key.txt
+            &mdash; rate-sentiment.py
+            &mdash; student-review.txt        
+</pre>
+                
+                
+            <p>Read this student review into memory and print it to the terminal as we did earlier with your API key: </p>
+<pre><code class="language-python">#Read student review into memory.
+with open('student-review.txt') as f:
+    student_review = f.read()
+
+print(student_review)
+</code></pre>
+            <p>When you run the above code, you should see this student review in the terminal:</p>
+<pre><code class="language-plaintext">Stats class was definitely challenging, but I learned 
+a lot! The teacher was helpful, and class discussions 
+were interesting. However, I struggled with the
+assignments. The instructions were often confusing,
+and I spent way too much time trying to figure out
+what was expected. I wish the assignments were more
+clear-cut.
+</code></pre>
+            <p>We can use Gemini to rate (quantify) the sentiment of this student review. A simple way to rate sentiment is with a Likert scale of 1-5, with 1 representing Very Negative and 5 representing Very Positive sentiment.</p>
+            <p>Directing Gemini to effectively rate sentiment takes us into an area called prompt engineering, which is the process of crafting instructions to guide AI models towards desired outputs. Prompt engineering is an iterative process, so by refining our instructions we'll discover how to write a prompt that produces the most desirable output.</p>
+            <p>Let's start by creating a function that will accept student feedback as a paragraph. This should look familiar from earlier:</p>
+<pre><code class="language-python">import google.generativeai as genai
+
+#Read Gemini API key into memory.
+with open('gemini-api-key.txt') as f:
+    genai_api_key = f.read()
+
+#Read student review into memory.
+with open('student-review.txt') as f:
+    student_review = f.read()
+
+#Configure API and select the Gemini 1.5 Flash language model.
+genai.configure(api_key=genai_api_key)
+model = genai.GenerativeModel('gemini-1.5-flash')
+
+def rate_sentiment(text):
+    """Rates the positivity of a text on scale of 1-5: 
+    5 = Very Positive. 1 = Very Negative.
+    """    
+    response = model.generate_content() 
+    return response.text
+
+#Apply the function to our text file and see Gemini's response.
+print(rate_sentiment(student_review))
+</code></pre>
+            <p>We can use this prompt: Rate the positivity of this student's review of a class on a scale of 1-5, with 1 representing Very Negative and 5 representing Very Positive. We can then use an <a href="https://www.w3schools.com/python/python_string_formatting.asp" target="_blank" rel="noopener noreferrer">f-string</a> again like this: </p>
+<pre><code class="language-python">def rate_sentiment(text):
+    """Rates the positivity of a text on scale of 1-5: 
+    5 = Very Positive. 1 = Very Negative.
+    """    
+    response = model.generate_content(f"Rate the positivity of this student's review of a class on a scale of 1-5, with 1 representing Very Negative and 5 representing Very Positive: {text}") 
+    return response.text
+
+print(rate_sentiment(student_review))
+</code></pre>
+            <p>Run the code and you should get a response similar to this in the terminal:</p>
+<pre><code class="language-plaintext">I would rate this review a **3/5**. 
+
+Here's why:
+
+* **Positive:** The student acknowledges learning a lot, appreciates the professor's helpfulness, and finds the class discussions engaging.
+* **Neutral:**  The student's experience with the assignments is mixed. While they struggle, the student doesn't express outright dissatisfaction with the professor or the class.
+* **Negative:**  The student explicitly expresses frustration with the assignment instructions and wishes they were clearer. 
+
+Overall, the review is balanced, highlighting both positive and negative aspects. It's not overly enthusiastic but also not overtly critical.
+</code></pre>
+            <p>The good news is that Gemini understands the prompt and is giving us a meaningful response. However, for our purposes, we just need the single digit Likert score and not the full justification. What we learn from Gemini's justified response is that we need to refine our prompt to be more specific about our desired output. This is prompt engineering. Also, if we require just a single digit, we should apply the Python <code class="file-name">.strip()</code> method to remove any incidental white space from our output. Let's try this:</p>
+<pre><code class="language-python">def rate_sentiment(text):
+    """Rates the positivity of a text on scale of 1-5: 
+    5 = Very Positive. 1 = Very Negative.
+    """    
+    response = model.generate_content(f"Rate the positivity of this student's review of a class on a scale of 1-5, with 1 representing Very Negative and 5 representing Very Positive. Your output should be in the form of a single digit representing your positivity score: {text}") 
+    # .text returns just text from Gemini and .strip() removes whitespace.
+    return response.text.strip()
+
+print(rate_sentiment(student_review))
+</code></pre>
+            <p>Let's recap: we’ve successfully passed our data to Gemini, had it analyze that data for sentiment positivity, and refined the format of its output through prompt engineering. Next we’ll apply our <code class="file-name">rate_sentiment()</code> function to an entire set of student feedback.</p>
+           
+        </section>
+<!-- EXERCISE 3 --> 
+        <section class="lesson-chapter">       
+            <h3 id="2.4">2.4 Exercise 3: Iterating over a set of student reviews</h3>
+            <p>In this section we will learn how to apply our Gemini-infused function to analyze a large dataset of student reviews.</p>
+            <p>Create a third folder called <code class="file-name">Exercise_03</code> and within it create a Python file called <code class="file-name">rate_student_reviews.py</code>. I've prepared a collection of 10 student reviews that we'll use to practice iterating over a dataset. Download <a href="Exercise_03/student-reviews-dataset.csv" download="student-reviews-dataset.csv">student-reviews-dataset.csv <i class="fa-solid fa-file-export"></i></a> and add it to <code class="file-name">Exercise_03</code>. Your file structure should look like this:</p> 
+<pre>
+    &mdash;&mdash; Exercise_03
+            &mdash; gemini-api-key.txt
+            &mdash; rate_student_reviews.py
+            &mdash; student-reviews-dataset.csv
+</pre>
+            <p>To read the CSV dataset into memory and apply our <code class="file-name">rate_sentiment()</code> function from Exercise 2 to an entire set of reviews, we'll use <a href="https://pandas.pydata.org/" target="_blank" rel="noopener noreferrer">pandas</a>, which is a very popular Python library for data manipulation and analysis. If you are not familiar with pandas already, it is well worth your time to become familiar with it <a href="https://pandas.pydata.org/docs/getting_started/intro_tutorials/" target="_blank" rel="noopener noreferrer">through this tutorial</a>. You can use pip to install pandas:
+<pre><code class="language-python">pip install pandas</code></pre>
+            <p>Once installed, create a dataframe from <code class="file-name">student-reviews-dataset.csv</code> and print the resulting dataframe to take a look at our data:</p>
+<pre><code class="language-python">import google.generativeai as genai
+import pandas as pd
+
+# Read student review data into memory.
+df = pd.read_csv('student-reviews-dataset.csv')
+print(df)
+</code></pre>
+            <p>You should see that the dataframe has two columns, <code class="file-name">student_name</code> and <code class="file-name">review</code> and that there are reviews from 10 students.</p>
+            <p>One powerful function in the pandas library is <code class="file-name">.apply()</code>, which allows us to create a new column in our dataset that is the result of iterating over and manipulating the <code class="file-name">review</code> column data with our <code class="file-name">rate_sentiment()</code> function from Exercise 2. Copy the <code class="file-name">rate_sentiment()</code> function into  <code class="file-name">rate_student_reviews.py</code>:</p>
+<pre><code class="language-python">import google.generativeai as genai
+import pandas as pd
+
+#Read Gemini API key into memory.
+with open('gemini-api-key.txt') as f:
+    genai_api_key = f.read()
+
+#Configure API and select the Gemini 1.5 Flash language model.
+genai.configure(api_key=genai_api_key)
+model = genai.GenerativeModel('gemini-1.5-flash')
+
+def rate_sentiment(text):
+    """Rates the positivity of a text on scale of 1-5: 
+    5 = Very Positive. 1 = Very Negative.
+    """    
+    response = model.generate_content(f"Rate the positivity of this student's review of a class on a scale of 1-5, with 1 representing Very Negative and 5 representing Very Positive. Your output should be in the form of a single digit representing your positivity score: {text}") 
+    # .text returns just text from Gemini and .strip() removes whitespace.
+    return response.text.strip()
+
+# Read student review data into memory.
+df = pd.read_csv('student-reviews-dataset.csv')
+
+#Iterate over student reviews with Gemini
+df['sentiment_rating'] = df['review'].apply(rate_sentiment)
+</code></pre>
+            <p>To do any kind of statistical analysis of our rated reviews, we need to be sure that they are integers. Use pandas' <code class="file-name">.dtypes</code> attribute to see what kind of data we have in each column of our dataframe:</p>
+<pre><code class="language-python">output = df.dtypes
+print(output)
+</code></pre>
+            <p>In your terminal you'll see that in fact the data we have in our <code class="file-name">sentiment_rating</code> column are not integers:</p>
+<pre><code class="language-plaintext">student_name        object
+review              object
+sentiment_rating    object
+dtype: object
+</code></pre>
+            <p>We can easily rectify this by using pandas to convert <code class="file-name">sentiment_rating</code> data to integers (int):</p>
+
+<pre><code class="language-python"># Read student review data into memory.
+df = pd.read_csv('student-reviews-dataset.csv')
+
+#Iterate over student reviews with Gemini
+df['sentiment_rating'] = df['review'].apply(rate_sentiment)
+
+# Convert sentiment_rating to integers
+df['sentiment_rating'] = df['sentiment_rating'].astype(int)
+
+result = df.dtypes
+print(result)
+</code></pre>
+            <p>Run this code again, and you'll see that <code class="file-name">sentiment_rating</code> data are now integers (int64). At this point, we can use pandas to get a statistical summary of our data using the <code class="file-name">.describe()</code> function. Here is what your full code should look like:</p> 
+<pre><code class="language-python">import google.generativeai as genai
+import pandas as pd
+
+#Read Gemini API key into memory.
+with open('gemini-api-key.txt') as f:
+    genai_api_key = f.read()
+
+#Configure API and select the Gemini 1.5 Flash language model.
+genai.configure(api_key=genai_api_key)
+model = genai.GenerativeModel('gemini-1.5-flash')
+
+def rate_sentiment(text):
+    """Rates the positivity of a text on scale of 1-5: 
+    5 = Very Positive. 1 = Very Negative.
+    """    
+    response = model.generate_content(f"Rate the positivity of this student's review of a class on a scale of 1-5, with 1 representing Very Negative and 5 representing Very Positive. Your output should be in the form of a single digit representing your positivity score: {text}") 
+    # .text returns just text from Gemini and .strip() removes whitespace.
+    return response.text.strip()
+
+# Read student review data into memory.
+df = pd.read_csv('student-reviews-dataset.csv')
+
+#Iterate over student reviews with Gemini
+df['sentiment_rating'] = df['review'].apply(rate_sentiment)
+
+# Convert sentiment_rating to integer
+df['sentiment_rating'] = df['sentiment_rating'].astype(int)
+
+# Use .dtypes to get a summary of data types
+result = df.dtypes
+print(result)
+
+# Use describe() to get summary statistics of sentiment_rating
+summary_statistics = df['sentiment_rating'].describe()
+print(summary_statistics)
+</code></pre>
+
+            <p>When you run this code, you'll have some useful information for assessing students' sentiments about a class. For example, the average (mean) and <a href="https://en.wikipedia.org/wiki/Quartile" target="_blank" rel="noopener noreferrer">quartiles</a>. You'll also get the highest rating (max) and lowest rating (min):</p>
+<pre><code class="language-plaintext">count    10.000000
+mean      2.800000
+std       1.549193
+min       1.000000
+25%       1.250000
+50%       3.000000
+75%       3.750000
+max       5.000000
+</code></pre>
+    </section>
+    <section class="lesson-chapter">
+        <h3 id="2.5">2.5 Scripts and files</h3>
+        <div class="files-list">
+            <p><a href="Exercise_01/" target="_blank" rel="noopener noreferrer" class="view-exercise-files-btn"><i class="fa-solid fa-folder-open"></i> Exercise_01</a></p>
+            <p><a href="Exercise_02/" target="_blank" rel="noopener noreferrer" class="view-exercise-files-btn"><i class="fa-solid fa-folder-open"></i> Exercise_02</a></p>
+            <p><a href="Exercise_03/" target="_blank" rel="noopener noreferrer" class="view-exercise-files-btn"><i class="fa-solid fa-folder-open"></i> Exercise_03</a></p>
+        </div>
+
+    </section>
+    </div>
+    <div class="major-section">
+            <h2 id="3">3. Evaluation</h2>
+        <section class="lesson-chapter">
+            <p>Now that you have firsthand experience using Gemini to rate the sentiment of student feedback, let's return to the problem we started with: bringing this technology to bear on teacher performance evaluations.</p>
+            <ol>
+                <li>What are the potential benefits, limitations, and/or drawbacks of using AI sentiment analysis in teacher evaluations?</li>
+                <li>Considering the limitations you may have encountered with the AI tool, propose one best practice for ensuring fairer and more reliable results when using AI for teacher performance evaluation.</li>
+                <li>Based on your experience, do you think AI sentiment analysis could be a valuable tool in teacher evaluation, even with its limitations? Why or why not?</li>
+            </ol>
+        </section>
+    </div>       
+    </main>
+    <footer>
+        <div class="footer-content">
+            <p class="footer-title">Evaluating AI in Teacher Performance Reviews:<br>Benefits, Biases, and Best Practices</p>
+            <p>By <a href="http://ericsilberberg.com" target="_blank" rel="noopener noreferrer">Eric Silberberg</a>, 2024</p>
+            <p>Supported by the CUNY Office of Faculty Affairs' <a href="https://www.cuny.edu/academics/faculty-affairs/cuny-innovative-teaching-academy/building-bridges-of-knowledge-bbk/" target="_blank" rel="noopener noreferrer">Building Bridges of Knowledge</a> project.</p>
+            <p>Available under a <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution 4.0 International license</a></p>
+            <i class="fa-brands fa-creative-commons"></i> <i class="fa-brands fa-creative-commons-by"></i>
+        </div>
+    </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll()</script>
+</body>
+</html>
