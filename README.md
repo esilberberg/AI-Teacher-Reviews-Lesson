@@ -10,4 +10,4 @@ The primary audience for this tutorial is educators and school administrators in
 A basic understanding of Python is required.
 
 ## Acknowledgement
-This tutorial was made possible by a grant from by The CUNY Office of Faculty Affairs' [Building Bridges of Knowledge](https://www.cuny.edu/academics/faculty-affairs/cuny-innovative-teaching-academy/building-bridges-of-knowledge-bbk/) project.
+This tutorial was made possible by a grant from by the CUNY Office of Faculty Affairs' [Building Bridges of Knowledge](https://www.cuny.edu/academics/faculty-affairs/cuny-innovative-teaching-academy/building-bridges-of-knowledge-bbk/) project.
