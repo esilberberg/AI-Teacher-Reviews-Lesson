@@ -1,5 +1,6 @@
 # Evaluating AI in Teacher Performance Reviews
 [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
+[Start the tutorial](https://esilberberg.github.io/AI-Teacher-Reviews-Lesson/)
 
 ## What will you learn?
 This tutorial will introduce you to using the Google Gemini API with Python to create your own custom AI tools. You'll explore how AI-driven sentiment analysis of student feedback can be applied to teacher performance reviews. You'll also learn techniques like prompt engineering to produce more useful analyses. By experimenting with Gemini, you'll gain a deeper understanding of the technology and, consequently, a more critical perspective on the potential use of AI in teacher performance reviews.
