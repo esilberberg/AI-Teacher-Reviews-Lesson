@@ -1,5 +1,4 @@
 # Evaluating AI in Teacher Performance Reviews
-[CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 
 [Start the tutorial](https://esilberberg.github.io/AI-Teacher-Reviews-Lesson/)
 
