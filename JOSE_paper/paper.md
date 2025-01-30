@@ -40,14 +40,14 @@ The tutorial guides participants through the development of a Python script for 
 
 The tutorial begins by framing the issues around AI-assisted TPEs in a similar fashion to the statement of need in this article. The participants are then prompted to obtain a Gemini API and install the [Google AI Python SDK](https://pypi.org/project/google-generativeai/). 
 
-## Practical exercises 
+## _Practical exercises_
 The first exercise walks participants through writing a function that uses Gemini to create an anagram of a person’s name. While not related to TPEs, the purpose is to familiarize participants with how to configure Gemini and integrate it into a function. This first exercise also asks participants to explore the response object that Gemini returns. This object contains both the text generated (anagram) and metadata about the generation. Unfortunately, the Gemini team continues to change the structure of this object’s metadata, but the most interesting part is to explore the safety filter ratings (e.g. probability of harassment and hate speech generation). 
 
 The second exercise imagines a statistics course where students have submitted end of year feedback and introduces the idea that Gemini can rate the sentiment of this student feedback. The participants write a function that applies a Likert scale to the feedback, which is entirely narrative and not structured. The Likert scale ranges from 1, representing Very Negative, to 5, representing Very Positive sentiment. When the participants run a first iteration of the function, Gemini returns a numeric rating plus several lines of text to justify its response. This is useful to see whether Gemini understands the task. However, with the goal being to create structured data, the participants see how prompt engineering can be used to prompt Gemini to return only a single digit reflective of its Likert rating. 
 
 The third exercise builds on the previous one and asks participants to apply the sentiment analysis function to a set of 10 student reviews, which the tutorial provides in a downloadable spreadsheet. Participants use rudimentary aspects of [pandas](https://pandas.pydata.org/) to apply the function to the set of student feedback and scrub the data: ensure that all outputs from Gemini are integers and there is no leading or trailing white spaces. This is necessary for the last part of the exercise where participants use pandas to find a simple average and interquartile range of student sentiment with respect to the statistics course. 
 
-## Evaluation
+## _Evaluation_
 The last section of the tutorial asks participants to reflect on the implications of bringing AI to bear on TPEs. The questions are: 
 
 + What are the potential benefits, limitations, and/or drawbacks of using AI sentiment analysis in teacher evaluations? 
