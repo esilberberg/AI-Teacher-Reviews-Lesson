@@ -1,5 +1,4 @@
 # Evaluating AI in Teacher Performance Reviews
-[![status](https://jose.theoj.org/papers/fe96d91a90bf4a6b0cd235207acefb10/status.svg)](https://jose.theoj.org/papers/fe96d91a90bf4a6b0cd235207acefb10)
 
 :rocket: [Start the tutorial](https://esilberberg.github.io/AI-Teacher-Reviews-Lesson/)
 
