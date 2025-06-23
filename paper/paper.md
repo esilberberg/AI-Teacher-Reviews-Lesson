@@ -16,7 +16,7 @@ authors:
 affiliations:
  - name: Assistant Professor, Librarian for Instructional Design and Education, Queens College, City University of New York
    index: 1
-date: 15 January 2024
+date: 2025
 bibliography: paper.bib
 ---
 
